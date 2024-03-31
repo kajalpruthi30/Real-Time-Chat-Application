@@ -34,19 +34,18 @@ export const signup = async (req, res) => {
         })
 
         if(newUser){
-
             // Generate JWT token
             generateTokenAndSetCookie(newUser._id, res)
 
             // save it to the database
             await newUser.save()
 
-            // Response to be displayed on postman
+            // Response to be displayed on postman/data(fetch)
             res.status(201).json({
                 _id: newUser._id,
                 fullName: newUser.fullName,
                 username: newUser.username,
-                profilePic: newUser.profilePic
+                profilePic: newUser.profilePic,
             })
         }
 
@@ -71,12 +70,12 @@ export const login = async (req, res) => {
          // Generate JWT token
          generateTokenAndSetCookie(user._id, res)
 
-         // Response to be displayed on postman
-         res.status(201).json({
+            // Response to be displayed on postman/data(fetch)
+            res.status(201).json({
              _id: user._id,
              fullName: user.fullName,
              username: user.username,
-             profilePic: user.profilePic
+             profilePic: user.profilePic,
          })
  
     } catch(error){
@@ -92,6 +91,5 @@ export const logout = async (req, res) =>{
     } catch(error){
         console.log("Error in logout controller", error.message)
         res.status(500).json({error: "Internal Server Error"})
-    }
-   
+    }  
 }

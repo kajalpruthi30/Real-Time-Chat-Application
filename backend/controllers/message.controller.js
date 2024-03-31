@@ -15,7 +15,11 @@ export const sendMessage = async (req, res) =>{
 
         // if a conversation doesn't exist, create one!
         if(!conversation){
-            conversation = await Conversation.create({
+            // conversation = await Conversation.create({
+            //     participants: [senderId, receiverId],
+            // })
+
+            conversation = new Conversation({
                 participants: [senderId, receiverId],
             })
         }

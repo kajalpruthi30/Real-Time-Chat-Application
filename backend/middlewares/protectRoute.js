@@ -18,7 +18,9 @@ const protectRoute = async (req, res, next) => {
             return res.status(404).json({error: "User not found"});   
         }
 
+        // user on left side can be used in other functions to get the details of that loggedIn user
         req.user = user;
+
         // next function is called like sendMessage from message.routes.js is called after it
         next();
     }
