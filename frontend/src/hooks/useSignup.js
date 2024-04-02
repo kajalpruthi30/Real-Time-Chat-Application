@@ -29,10 +29,8 @@ const useSignup = () => {
             throw new Error(data.error)
         }
 
-        // localstorage
+        // localstorage and context - automatic login after signup
         localStorage.setItem("chat-user", JSON.stringify(data))
-
-        // context
         setAuthUser(data)
     }
     catch(error){

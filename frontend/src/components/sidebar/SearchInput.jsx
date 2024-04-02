@@ -1,42 +1,23 @@
-import React, { useState } from 'react'
-import { IoSearchSharp } from "react-icons/io5";
-import useConversation from "../../zustand/useConversation"
-import useGetConversations from "../../hooks/useGetConversations"
-import toast from 'react-hot-toast';
+import React, { useState } from 'react';
+import { IoSearchSharp } from 'react-icons/io5';
 
-function SearchInput() {
+function SearchInput({setSearch}) {
 
-  const [search, setSearch] = useState("")
-  const {setSelectedConversation} = useConversation()
-  const {conversations} = useGetConversations()
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if(!search) return
-
-    const conversation = conversations.find((c) => c.fullName.toLowerCase().includes(search.toLowerCase()))
-
-    if(conversation){
-      setSelectedConversation(conversation)
-      setSearch("")
-    } else{
-      toast.error("No such user found!")
-    }
-
-  }
-
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
 
   return (
-    <form className='flex justify-between py-2 px-4' onSubmit={handleSubmit}>
-      <input type="text" placeholder='Search...' 
-        className='w-[330px] input input-bordered rounded-full focus:outline-none'
-        value={search}
-        onChange={(e) => setSearch(e.target.value)} />
-      <button type='submit' className='btn btn-circle text-black  hover:bg-white'>
-        <IoSearchSharp className='w-6 h-6 outline-none hover:color-white'/>
-      </button>
+    <form className='flex justify-between py-2 px-4'>
+      <input
+        type='text'
+        placeholder='Search...'
+        className='w-full pl-8 input input-bordered rounded-full focus:outline-none'
+        onChange={handleChange}
+      />
+      <IoSearchSharp className='absolute mt-3 ml-2 w-5 h-5 text-gray-400' />
     </form>
-  )
+  );
 }
 
-export default SearchInput
+export default SearchInput;

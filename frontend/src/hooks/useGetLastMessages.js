@@ -5,16 +5,16 @@ import {toast} from "react-hot-toast"
 const useGetMessages = () => {
 
     const [loading, setLoading] = useState(false)
-    const {messages, setMessages, selectedConversation} = useConversation()
+    const {messages, setMessages, lastMessages, setLastMessages} = useConversation()
 
     useEffect(() => {
-        const getMessages =  async(message) => {
+        const getLastMessages =  async(message) => {
             setLoading(true)
             try{
-                const res = await fetch(`/api/messages/get/${selectedConversation._id}`)
+                const res = await fetch('/api/messages/getLastMessages')
                 const data = await res.json();
-                setMessages(data);
-        
+                setLastMessages(data);
+
                 if(data.error){
                     throw new Error(data.error)
                 }
@@ -27,11 +27,11 @@ const useGetMessages = () => {
             }
         }
 
-        if(selectedConversation?._id) getMessages()
+        getLastMessages()
 
-    }, [selectedConversation?._id, setMessages])
+    }, [messages, setMessages])
 
-    return {loading, messages}
+    return {loading, lastMessages}
 }
 
 export default useGetMessages;
